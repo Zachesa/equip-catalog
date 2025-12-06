@@ -1,0 +1,29 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:80"
+    volumes:
+      - .:/var/www/html:cached
+    environment:
+      DB_DSN: mysql:host=db;dbname=equip_catalog;charset=utf8mb4
+      DB_USER: equip_user
+      DB_PASS: equip_pass123
+    depends_on:
+      - db
+
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_DATABASE: equip_catalog
+      MYSQL_USER: equip_user
+      MYSQL_PASSWORD: equip_pass123
+      MYSQL_ROOT_PASSWORD: root_pass_secure_456
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql  # ← исправлено: db_data (имя), а не db_
+
+volumes:
+  db_data:
