@@ -43,6 +43,7 @@
     docker-compose up -d --build
 
 3. Примените миграцию (один раз):
+    docker-compose cp database/schema.sql db:/tmp/schema.sql
     Get-Content database/schema.sql | docker-compose exec -T db mysql -u equip_user -pequip_pass123 equip_catalog
 
 Откройте в браузере:
